@@ -10,7 +10,15 @@ http:
     app-weighted:
       weighted:
         services:
-          - name: app-stable@docker
-            weight: 50
-          - name: app-canary@docker
-            weight: 50
+          - name: app-stable-service@file
+            weight: 90
+          - name: app-canary-service@file
+            weight: 10
+    app-stable-service:
+      loadBalancer:
+        servers:
+          - url: "http://app-stable:8080"
+    app-canary-service:
+      loadBalancer:
+        servers:
+          - url: "http://app-canary:8080"
